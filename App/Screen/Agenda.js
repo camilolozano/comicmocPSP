@@ -16,14 +16,14 @@ import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { Container, Header, Content, List, ListItem, Body, Title } from 'native-base';
 
 
-LocaleConfig.locales['fr'] = {
+LocaleConfig.locales['Es'] = {
   monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
   monthNamesShort: ['ene.', 'Feb.', 'Mar.', 'Abr.', 'May.', 'Jun.', 'Jul.', 'Agos.', 'Sept.', 'Oct.', 'Nov.', 'Dic.'],
   dayNames: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Juevez', 'Viernes', 'Sabado'],
   dayNamesShort: ['Dom.', 'Lun.', 'Mar.', 'Mie.', 'Jue.', 'Vie.', 'Sab.']
 };
 
-LocaleConfig.defaultLocale = 'fr';
+LocaleConfig.defaultLocale = 'Es';
 
 export default class Agenda extends Component {
   constructor(props) {
@@ -35,43 +35,8 @@ export default class Agenda extends Component {
       Tarde: [],
     };
   }
-  render() {
-    let agenda_mañana = this.state.mañana.map((item, index) => { return ( <ListItem><Text>{item}</Text></ListItem> )  })
-    
-    return (
-      <View style={styles.contenedor}>
-        <View style={styles.calendario}>
-          <Calendar
-            // Collection of dates that have to be marked. Default = {}
-            markedDates={{
-              '2017-08-04': { selected: true, marked: true },
-              '2017-08-05': { selected: true, marked: true },
-              '2017-08-06': { marked: true, selected: true },
-              '2017-08-07': { selected: true, marked: true }
-            }}
-            onDayPress={this.onDayPress.bind(this)}
-          />
-        </View>
-        <View style={styles.agenda}>
-          <Container>
-            <ScrollView>
-              <Content>
-                <List>
-                  <ListItem itemDivider>
-                    <Text>MAÑANA</Text>
-                  </ListItem>
 
-                    {agenda_mañana}
-
-                </List>
-              </Content>
-            </ScrollView>
-          </Container>
-        </View>
-      </View>
-    );
-  }
-  onDayPress(day) {
+  onDayPress = (day) => {
     switch (day.day) {
       case 4:
         const mañana1 = [
@@ -138,66 +103,55 @@ export default class Agenda extends Component {
     }
   }
 
-}
+  renderListItems() {
+    const { mañana } = this.state;
 
-const Item = (props) => {
-  return (
-    <Container>
-      <ScrollView>
-        <Content>
-          <List>
-            <ListItem itemDivider>
-              <Text>MAÑANA</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Simon Mignolet</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Nathaniel Clyne</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Dejan Lovren</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Dejan Lovren</Text>
-            </ListItem>
-            <ListItem itemDivider>
-              <Text>TARDE</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Dejan Lovren</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Dejan Lovren</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Dejan Lovren</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Dejan Lovren</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Dejan Lovren</Text>
-            </ListItem>
-          </List>
-        </Content>
-      </ScrollView>
-    </Container>
-  );
-};
+    if (!mañana) {
+      return null;
+    }
 
-/* const Item2 = (props) => {
-  return (
-    <Container>
+    return mañana.map((item, index) => (
+      <ListItem key={index}>
+        <Text>{item}</Text>
+      </ListItem>
+    ));
+  }
+
+  render() {
+
+    return (
+      <View style={styles.contenedor}>
+        <View style={styles.calendario}>
+          <Calendar
+            // Collection of dates that have to be marked. Default = {}
+            markedDates={{
+              '2017-08-04': { selected: true, marked: true },
+              '2017-08-05': { selected: true, marked: true },
+              '2017-08-06': { marked: true, selected: true },
+              '2017-08-07': { selected: true, marked: true }
+            }}
+            onDayPress={this.onDayPress}
+          />
+        </View>
+        <View style={styles.agenda}>
+          <Container>
             <ScrollView>
               <Content>
-                <Text>Hola....</Text>
+                <List>
+                  <ListItem itemDivider>
+                    <Text>MAÑANA</Text>
+                  </ListItem>
+                  {this.renderListItems()}
+                </List>
               </Content>
             </ScrollView>
           </Container>
-          );
-};
- */
+        </View>
+      </View>
+    );
+  }
+}
+
 const styles = StyleSheet.create({
   contenedor: {
     flex: 1,
