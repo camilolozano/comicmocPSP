@@ -10,122 +10,73 @@ import {
     StyleSheet,
     Text,
     View,
-    ScrollView
+    ScrollView,
+    Dimensions,
+    Image
 } from 'react-native';
-import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { Container, Header, Content, List, ListItem, Body, Title } from 'native-base';
-
-
-LocaleConfig.locales['fr'] = {
-    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-    monthNamesShort: ['ene.', 'Feb.', 'Mar.', 'Abr.', 'May.', 'Jun.', 'Jul.', 'Agos.', 'Sept.', 'Oct.', 'Nov.', 'Dic.'],
-    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Juevez', 'Viernes', 'Sabado'],
-    dayNamesShort: ['Dom.', 'Lun.', 'Mar.', 'Mie.', 'Jue.', 'Vie.', 'Sab.']
-};
-
-LocaleConfig.defaultLocale = 'fr';
+import Agenda from './Screen/Agenda';
+const { height, width } = Dimensions.get('window');
 
 export default class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            showToast: false
-        };
     }
+
+    state = {
+        isReady: false,
+    };
+
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({ isReady: true });
+        }, 1000);
+    }
+
     render() {
-        return (
-            <View style={styles.contenedor}>
-                <View style={styles.calendario}>
-                    <Calendar
-                        // Collection of dates that have to be marked. Default = {}
-                        markedDates={{
-                            '2017-08-05': { selected: true, marked: true },
-                            '2017-08-06': { marked: true, selected: true },
-                            '2017-08-07': { selected: true, marked: true }
-                        }}
-                        onDayPress={this.onDayPress.bind(this)}
-                    />
-                </View>
-
-                <View style={styles.agenda}>
-                    <Item></Item>
-                </View>
-
-            </View>
-        );
-    }
-    onDayPress(day) {
-
+        if (!this.state.isReady) {
+            return (
+                <Image
+                    source={require('./Assets/app-fondo-.png')}
+                    style={styles.backgroundimage}
+                >
+                    <View style={styles.container}>
+                        <Image
+                            source={require('./Assets/logo.png')}
+                            style={styles.image}
+                        />
+                        <Text
+                            style={styles.text}
+                        >Cargando...</Text>
+                    </View>
+                </Image>
+            )
+        }
+        return <Agenda />
     }
 
 }
-
-class Item extends Component {
-
-    render() {
-        return (
-
-            <Container>
-                <Header>
-                    <Body>
-                        <Title>Programación</Title>
-                    </Body>
-                </Header>
-                <ScrollView>
-                    <Content>
-                        <List>
-                            <ListItem itemDivider>
-                                <Text>MAÑANA</Text>
-                            </ListItem>
-                            <ListItem>
-                                <Text>Simon Mignolet</Text>
-                            </ListItem>
-                            <ListItem>
-                                <Text>Nathaniel Clyne</Text>
-                            </ListItem>
-                            <ListItem>
-                                <Text>Dejan Lovren</Text>
-                            </ListItem>
-                            <ListItem>
-                                <Text>Dejan Lovren</Text>
-                            </ListItem>
-                            <ListItem itemDivider>
-                                <Text>TARDE</Text>
-                            </ListItem>
-                            <ListItem>
-                                <Text>Dejan Lovren</Text>
-                            </ListItem>
-                            <ListItem>
-                                <Text>Dejan Lovren</Text>
-                            </ListItem>
-                            <ListItem>
-                                <Text>Dejan Lovren</Text>
-                            </ListItem>
-                            <ListItem>
-                                <Text>Dejan Lovren</Text>
-                            </ListItem>
-                            <ListItem>
-                                <Text>Dejan Lovren</Text>
-                            </ListItem>
-                        </List>
-                    </Content>
-                </ScrollView>
-            </Container>
-        )
-    }
-
-}
-
 
 const styles = StyleSheet.create({
-    contenedor: {
-        flex: 1,        
+    backgroundimage: {
+        flex: 1,
+        resizeMode: 'cover',
+        width: width,
+        height: height,
     },
-    calendario: {
-        flex: 3,
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    agenda: {
-        flex: 3,
+    image: {
+        width: 300,
+        height: 300,
+    },
+    text: {
+        fontSize: 16,
+        color: 'white'
     }
 
 });
