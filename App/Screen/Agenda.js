@@ -129,12 +129,12 @@ export default class Diary extends Component {
       return morning.map((item, index) => (
         <ListItem avatar key={index}>
           <Left>
-            <Text>{item.hora}</Text>
+            <Text style={styles.time}>{item.hora}</Text>
           </Left>
           <Body>
-            <Text>{item.actividad}</Text>
-            <Text note>{item.responsable}</Text>
-            <Text note>{item.lugar}</Text>
+            <Text style={styles.activity}>{item.actividad}</Text>
+            <Text style={styles.Coach} note>{item.responsable}</Text>
+            <Text style={styles.place} note>{item.lugar}</Text>
           </Body>
         </ListItem>
       ));
@@ -155,12 +155,12 @@ export default class Diary extends Component {
       return late.map((item, index) => (
         <ListItem avatar key={index}>
           <Left>
-            <Text>{item.hora}</Text>
+            <Text style={styles.title}>{item.hora}</Text>
           </Left>
           <Body>
-            <Text>{item.actividad}</Text>
-            <Text note>{item.responsable}</Text>
-            <Text note>{item.lugar}</Text>
+            <Text style={styles.activity}>{item.actividad}</Text>
+            <Text style={styles.Coach} note>{item.responsable}</Text>
+            <Text style={styles.place} note>{item.lugar}</Text>
           </Body>
         </ListItem>
       ));
@@ -187,6 +187,7 @@ export default class Diary extends Component {
               onDayPress={this.onDayPress}
             />
           </View>
+          <View style={styles.separator}></View>
           <View style={styles.diary}>
             <Container>
               <ScrollView>
@@ -197,7 +198,7 @@ export default class Diary extends Component {
                     </ListItem>
                     {this.renderListItemsMorning()}
                     <ListItem itemDivider>
-                      <Text style={styles.time}>Agenda tarde</Text>
+                      <Text style={styles.title}>Agenda tarde</Text>
                     </ListItem>
                     {this.renderListItemslate()}
                   </List>
@@ -216,10 +217,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   calendar: {
-    flex: 2,
+    flex: 3,
   },
   diary: {
-    flex: 4,
+    flex: 7,
   },
   backgroundimage: {
     flex: 1,
@@ -228,12 +229,27 @@ const styles = StyleSheet.create({
     height: height,
   },
   title: {
-    color: 'red',
-    fontSize: 20
+    color: '#00abf6',
+    fontSize: 23,
+    fontFamily: 'ArchitectsDaughter',
   },
   time: {
-    color: 'blue',
-    fontSize: 20
+    color: '#00abf6',
+    fontFamily: 'ArchitectsDaughter',
+    fontSize: 20,
+  },
+  activity: {
+    color: '#00abf6',
+    fontFamily: 'ArchitectsDaughter',
+    fontSize: 20,
+  },
+  Coach: {
+    color: 'black',
+    fontFamily: 'ArchitectsDaughter',
+    fontSize: 18,
+  },
+  place: {
+    fontFamily: 'ArchitectsDaughter',
+    fontSize: 16,
   }
-
 });
