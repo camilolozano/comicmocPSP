@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "727397707497",
+    "firebase_url": "https://comiccom-2fcfe.firebaseio.com",
+    "project_id": "comiccom-2fcfe",
+    "storage_bucket": "comiccom-2fcfe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:727397707497:android:88ccef60056da28a",
+        "android_client_info": {
+          "package_name": "com.comiccom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "727397707497-r877ritr27ucq9atc6briqpktq0digoa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAeHJRympUj6BTJYHPZZp_w1Ajrx855cw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -10,11 +10,37 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView
+  ScrollView,
+  Dimensions,
+  Image
 } from 'react-native';
-import { Calendar, LocaleConfig } from 'react-native-calendars';
-import { Container, Header, Content, List, ListItem, Body, Title } from 'native-base';
-
+import {
+  Calendar,
+  LocaleConfig
+} from 'react-native-calendars';
+import {
+  Container,
+  Header,
+  Content,
+  List,
+  ListItem,
+  Body,
+  Title,
+  Left,
+  Right
+} from 'native-base';
+import {
+  Friday,
+  FridayLate
+} from '../Services/ServicesFriday';
+import {
+  Saturday,
+  SaturdayLate
+} from '../Services/ServicesSaturday';
+import {
+  Sunday,
+  SundayLate
+} from '../Services/ServicesSunday';
 
 LocaleConfig.locales['Es'] = {
   monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
@@ -24,143 +50,190 @@ LocaleConfig.locales['Es'] = {
 };
 
 LocaleConfig.defaultLocale = 'Es';
+const { height, width } = Dimensions.get('window');
 
-export default class Agenda extends Component {
+export default class Diary extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showToast: false,
-      component: '',
-      mañana: [],
-      Tarde: [],
+      morning: [],
+      late: [],
+      noEvent: false,
+      dateSelected: '',
+      markers: {
+        '2017-08-04': { selected: true, marked: true, },
+        '2017-08-05': { selected: true, marked: true },
+        '2017-08-06': { selected: true, marked: true }
+      }
     };
+  }
+
+  componentDidMount() {
+    this.setState({ morning: Friday, late: FridayLate, noEvent: false });
   }
 
   onDayPress = (day) => {
     switch (day.day) {
       case 4:
-        const mañana1 = [
-          'uno',
-          'dos',
-          'tres'
-        ];
-        const tarde1 = [
-          'cuatro',
-          'cinco',
-          'seis'
-        ];
-        this.setState({ component: 'Uno' });
-        this.setState({ mañana: mañana1 });
-        this.setState({ tarde: tarde1 });
+        this.setState({
+          morning: Friday,
+          late: FridayLate,
+          dateSelected: day.dateString,
+          markers: {
+            '2017-08-04': { selected: true, marked: true },
+            '2017-08-05': { selected: false, marked: true },
+            '2017-08-06': { selected: false, marked: true }
+          },
+          noEvent: false
+        });
         break;
       case 5:
-        const mañana2 = [
-          'siete',
-          'ocho',
-          'nueve'
-        ];
-        const tarde2 = [
-          'dies',
-          'once',
-          'doce'
-        ];
-        this.setState({ component: 'Uno' });
-        this.setState({ mañana: mañana2 });
-        this.setState({ tarde: tarde2 });
+        this.setState({
+          morning: Saturday,
+          late: SaturdayLate,
+          dateSelected: day.dateString,
+          markers: {
+            '2017-08-04': { selected: false, marked: true },
+            '2017-08-05': { selected: true, marked: true },
+            '2017-08-06': { selected: false, marked: true }
+          },
+          noEvent: false
+        });
         break;
       case 6:
-        const mañana3 = [
-          'trece',
-          'catorce',
-          'quince'
-        ];
-        const tarde3 = [
-          'diesiseis',
-          'diesisiete',
-          'diesiocho'
-        ];
-        this.setState({ component: 'Uno' });
-        this.setState({ mañana: mañana3 });
-        this.setState({ tarde: tarde3 });
-        break;
-      case 7:
-        const mañana4 = [
-          'diesinueve',
-          'veinte',
-          'veintiuno'
-        ];
-        const tarde4 = [
-          'veintidos',
-          'veintitres',
-          'veinticuatro'
-        ];
-        this.setState({ component: 'Uno' });
-        this.setState({ mañana: mañana4 });
-        this.setState({ tarde: tarde4 });
+        this.setState({
+          morning: Sunday,
+          late: SundayLate,
+          dateSelected: day.dateString,
+          markers: {
+            '2017-08-04': { selected: false, marked: true },
+            '2017-08-05': { selected: false, marked: true },
+            '2017-08-06': { selected: true, marked: true }
+          },
+          noEvent: false
+        });
         break;
       default:
+        this.setState({ noEvent: true, dateSelected: day.dateString });
         break;
     }
   }
 
-  renderListItems() {
-    const { mañana } = this.state;
-
-    if (!mañana) {
+  renderListItemsMorning() {
+    const { morning } = this.state;
+    if (!morning) {
       return null;
     }
-
-    return mañana.map((item, index) => (
-      <ListItem key={index}>
-        <Text>{item}</Text>
+    if (!this.state.noEvent) {
+      return morning.map((item, index) => (
+        <ListItem avatar key={index}>
+          <Left>
+            <Text>{item.hora}</Text>
+          </Left>
+          <Body>
+            <Text>{item.actividad}</Text>
+            <Text note>{item.responsable}</Text>
+            <Text note>{item.lugar}</Text>
+          </Body>
+        </ListItem>
+      ));
+    }
+    return (
+      <ListItem>
+        <Text>Esta jornada no hay eventos...</Text>
       </ListItem>
-    ));
+    )
+  }
+
+  renderListItemslate() {
+    const { late } = this.state;
+    if (!late) {
+      return null;
+    }
+    if (!this.state.noEvent) {
+      return late.map((item, index) => (
+        <ListItem avatar key={index}>
+          <Left>
+            <Text>{item.hora}</Text>
+          </Left>
+          <Body>
+            <Text>{item.actividad}</Text>
+            <Text note>{item.responsable}</Text>
+            <Text note>{item.lugar}</Text>
+          </Body>
+        </ListItem>
+      ));
+    }
+    return (
+      <ListItem>
+        <Text>Esta jornada no hay eventos...</Text>
+      </ListItem>
+    )
   }
 
   render() {
 
     return (
-      <View style={styles.contenedor}>
-        <View style={styles.calendario}>
-          <Calendar
-            // Collection of dates that have to be marked. Default = {}
-            markedDates={{
-              '2017-08-04': { selected: true, marked: true },
-              '2017-08-05': { selected: true, marked: true },
-              '2017-08-06': { marked: true, selected: true },
-              '2017-08-07': { selected: true, marked: true }
-            }}
-            onDayPress={this.onDayPress}
-          />
+      <Image
+        source={require('../Assets/app-fondo-blanco.png')}
+        style={styles.backgroundimage}
+      >
+        <View style={styles.container}>
+          <View style={styles.calendar}>
+            <Calendar
+              // Collection of dates that have to be marked. Default = {}
+              markedDates={this.state.markers}
+              onDayPress={this.onDayPress}
+            />
+          </View>
+          <View style={styles.diary}>
+            <Container>
+              <ScrollView>
+                <Content>
+                  <List>
+                    <ListItem itemDivider>
+                      <Text style={styles.title}>Agenda mañana</Text>
+                    </ListItem>
+                    {this.renderListItemsMorning()}
+                    <ListItem itemDivider>
+                      <Text style={styles.time}>Agenda tarde</Text>
+                    </ListItem>
+                    {this.renderListItemslate()}
+                  </List>
+                </Content>
+              </ScrollView>
+            </Container>
+          </View>
         </View>
-        <View style={styles.agenda}>
-          <Container>
-            <ScrollView>
-              <Content>
-                <List>
-                  <ListItem itemDivider>
-                    <Text>MAÑANA</Text>
-                  </ListItem>
-                  {this.renderListItems()}
-                </List>
-              </Content>
-            </ScrollView>
-          </Container>
-        </View>
-      </View>
+      </Image>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  contenedor: {
+  container: {
     flex: 1,
   },
-  calendario: {
-    flex: 3,
+  calendar: {
+    flex: 2,
   },
-  agenda: {
-    flex: 3,
+  diary: {
+    flex: 4,
+  },
+  backgroundimage: {
+    flex: 1,
+    resizeMode: 'cover',
+    width: width,
+    height: height,
+  },
+  title: {
+    color: 'red',
+    fontSize: 20
+  },
+  time: {
+    color: 'blue',
+    fontSize: 20
   }
 
 });

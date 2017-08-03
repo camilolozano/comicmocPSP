@@ -15,7 +15,9 @@ import {
     Image
 } from 'react-native';
 import { Container, Header, Content, List, ListItem, Body, Title } from 'native-base';
-import Agenda from './Screen/Agenda';
+import Diary from './Screen/Agenda';
+import Firebase from './firebase';
+
 const { height, width } = Dimensions.get('window');
 
 export default class App extends Component {
@@ -28,6 +30,12 @@ export default class App extends Component {
     };
 
     componentDidMount() {
+
+        Firebase.messaging().getInitialNotification()
+            .then((notification) => {
+                console.log('Notification which opened the app: ', notification);
+            });
+
         setTimeout(() => {
             this.setState({ isReady: true });
         }, 1000);
@@ -52,7 +60,7 @@ export default class App extends Component {
                 </Image>
             )
         }
-        return <Agenda />
+        return <Diary />
     }
 
 }
