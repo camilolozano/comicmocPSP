@@ -17,6 +17,7 @@ import {
 import { Container, Header, Content, List, ListItem, Body, Title } from 'native-base';
 import Diary from './Screen/Agenda';
 import Firebase from './firebase';
+import Orientation from 'react-native-orientation';
 
 const { height, width } = Dimensions.get('window');
 
@@ -30,6 +31,7 @@ export default class App extends Component {
     };
 
     componentDidMount() {
+        Orientation.lockToPortrait();
         setTimeout(() => {
             this.setState({ isReady: true });
         }, 1000);
