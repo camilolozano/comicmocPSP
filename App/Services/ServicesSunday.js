@@ -1,7 +1,7 @@
 const Sunday = [
   {
     hora: '10 am',
-    actividad: 'Thriler –Coreografía (Taller Practico)',
+    actividad: 'Thriller –Coreografía (Taller Practico)',
     responsable: 'JAM Colectivo Coreográfico',
     lugar: 'Zona Verde'
   },

@@ -15,7 +15,8 @@ import {
     Image
 } from 'react-native';
 import { Container, Header, Content, List, ListItem, Body, Title } from 'native-base';
-import Diary from './Screen/Agenda';
+// import Diary from './Screen/Agenda';
+import Routs from './Components/AppNavigator';
 import Firebase from './firebase';
 import Orientation from 'react-native-orientation';
 
@@ -56,7 +57,8 @@ export default class App extends Component {
                 </Image>
             )
         }
-        return <Diary />
+        // return <Diary />
+        return <Routs />
     }
 
 }

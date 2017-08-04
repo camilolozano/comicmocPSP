@@ -12,7 +12,8 @@ import {
   View,
   ScrollView,
   Dimensions,
-  Image
+  Image,
+  Button,
 } from 'react-native';
 import {
   Calendar,
@@ -27,7 +28,9 @@ import {
   Body,
   Title,
   Left,
-  Right
+  Right,
+  Icon,
+  Subtitle
 } from 'native-base';
 import {
   Friday,
@@ -72,6 +75,19 @@ export default class Diary extends Component {
   componentDidMount() {
     this.setState({ morning: Friday, late: FridayLate, noEvent: false });
   }
+
+
+  static navigationOptions = ({navigation}) => {
+    return {
+      title: 'Agenda',
+      headerRight: (
+        <Button
+          title='Info'
+          onPress={() => navigation.navigate('Sponsors')}
+        />
+      ),
+    };
+  };
 
   onDayPress = (day) => {
     switch (day.day) {
@@ -216,13 +232,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   calendar: {
-    flex: 4,
+    flex: 3,
   },
   separator: {
     flex: 0.3,
   },
   diary: {
-    flex: 6,
+    flex: 7,
   },
   backgroundimage: {
     flex: 1,
