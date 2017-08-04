@@ -187,7 +187,6 @@ export default class Diary extends Component {
               onDayPress={this.onDayPress}
             />
           </View>
-          <View style={styles.separator}></View>
           <View style={styles.diary}>
             <Container>
               <ScrollView>
@@ -217,10 +216,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   calendar: {
-    flex: 3,
+    flex: 4,
+  },
+  separator: {
+    flex: 0.3,
   },
   diary: {
-    flex: 7,
+    flex: 6,
   },
   backgroundimage: {
     flex: 1,

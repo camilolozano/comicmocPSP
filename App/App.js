@@ -30,12 +30,6 @@ export default class App extends Component {
     };
 
     componentDidMount() {
-
-        Firebase.messaging().getInitialNotification()
-            .then((notification) => {
-                console.log('Notification which opened the app: ', notification);
-            });
-
         setTimeout(() => {
             this.setState({ isReady: true });
         }, 1000);
