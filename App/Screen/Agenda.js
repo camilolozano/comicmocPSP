@@ -234,11 +234,8 @@ const styles = StyleSheet.create({
   calendar: {
     flex: 3,
   },
-  separator: {
-    flex: 0.3,
-  },
   diary: {
-    flex: 7,
+    flex: 6,
   },
   backgroundimage: {
     flex: 1,
